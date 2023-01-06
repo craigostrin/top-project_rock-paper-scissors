@@ -11,15 +11,14 @@ const OOPS_PROMPT = "Hmm, the hand you reach out is empty.\nLuckily, I am mercif
 console.log(askPlayerSelection());
 
 
-// TODO BUG: if you enter the recursion, 'input' doesn't update when you enter a correct value on the subsequent prompt(s)
 function askPlayerSelection() {
     let input = prompt(DEFAULT_PROMPT);
     input = input.toLowerCase().trim();
 
     if (input != 'rock' && input != 'paper' && input != 'scissors') {
         alert(OOPS_PROMPT);
-        askPlayerSelection();
-    } else {
-        return input;
+        return askPlayerSelection();
     }
+    
+    return input;
 }
