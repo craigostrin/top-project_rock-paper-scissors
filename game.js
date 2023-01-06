@@ -5,14 +5,21 @@
 // playRound(playerSelection, computerSelection) returns a string showing the result
 // game() loops playRound() 5 times, then declares the winner
 
-let playerSelection = askPlayerSelection();
+const DEFAULT_PROMPT = "It's Rock/Paper/Scissors, baby!\nYou know the rules. Choose your weapon."
+const OOPS_PROMPT = "Hmm, the hand you reach out is empty.\nLuckily, I am merciful. Now pick a proper weapon."
 
-// I still can't believe this dumb language doesn't do return types 
+console.log(askPlayerSelection());
+
+
+// TODO BUG: if you enter the recursion, 'input' doesn't update when you enter a correct value on the subsequent prompt(s)
 function askPlayerSelection() {
-    let input = prompt("It's Rock/Paper/Scissors. You know the rules. Choose your weapon!");
-    input = input.toLowerCase();
+    let input = prompt(DEFAULT_PROMPT);
+    input = input.toLowerCase().trim();
 
-
-    return 'a string' // TODO PLACEHOLDER
-
+    if (input != 'rock' && input != 'paper' && input != 'scissors') {
+        alert(OOPS_PROMPT);
+        askPlayerSelection();
+    } else {
+        return input;
+    }
 }
