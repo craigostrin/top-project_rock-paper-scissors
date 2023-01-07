@@ -1,7 +1,7 @@
-// go go gadget pseudocode
+// go go gadget pseudocode [1.01: I'm leaving this here to show my work and the original spec]
 
-// DONE prompt for playerSelection (case insensitive!)
-// DONE getComputerChoice() will randomly return a string 'Rock' 'Paper' or 'Scissors 
+// prompt for playerSelection (case insensitive!)
+// getComputerChoice() will randomly return a string 'Rock' 'Paper' or 'Scissors 
 // playRound(playerSelection, computerSelection) returns a string showing result like so: 'You Lose! Paper beats Rock'
 // game() loops playRound() 5 times, then declares the winner
 
@@ -12,7 +12,6 @@ const RESTART_TEXT = "Refresh to play again."
 
 let playerWins = 0;
 
-game(5);
 
 function game(roundsToPlay) {
     if (roundsToPlay % 2 == 0) {
