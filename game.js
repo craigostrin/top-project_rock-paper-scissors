@@ -7,37 +7,92 @@
 
 const DEFAULT_PROMPT = "It's Rock/Paper/Scissors, baby!\nYou know the rules. Choose your weapon."
 const OOPS_PROMPT = "Hmm, the hand you reach out is empty.\nLuckily, I am merciful. Now pick a proper weapon."
+const TIE_TEXT = "Tie! Let's go again."
+const RESTART_TEXT = "Refresh to play again."
 
+let playerWins = 0;
 
-function playRound(playerSelection, cpuSelection) {
-    let result = '';
+game(5);
 
+function game(roundsToPlay) {
+    if (roundsToPlay % 2 == 0) {
+        console.error("ERROR: Programmer is an idiot");
+        return;
+    }
 
+    let roundsToWin = Math.ceil(roundsToPlay / 2);
 
+    for (let i = 0; i < roundsToPlay; i++) {
+        playRound();
+    }
 
+    let cpuWins = roundsToPlay - playerWins;
+
+    if (playerWins > cpuWins) {
+        console.log(`You won ${playerWins} to ${cpuWins}. Well played.`);
+        console.log()
+    } else {
+        console.log(`You lost ${cpuWins} to ${playerWins}. Try being less predictable. 😏`);
+    }
 }
 
-// work in progress
+
+function playRound() {
+    let player = askPlayerSelection();
+    let cpu = getComputerChoice();
+    let winner = determineWinner(player, cpu);
+
+    if (winner == 'Tie') {
+        console.log(TIE_TEXT);
+        playRound();
+        return;
+    } else if (winner == player) {
+        playerWins++;
+        console.log(`You Win! ${player} beats ${cpu}.`);
+    } else {
+        console.log (`You Lose! ${cpu} beats ${player}.`);
+    }
+}
+
+
 function determineWinner(pick1, pick2) {
-    let winner = '';
-
     if (pick1 == pick2) {
-        winner = 'Tie';
-    }
-    
-    if (pick1 == 'Rock') {
-        if (pick2 == 'Paper') {
-            winner = pick1;
-        } else if (pick2 == 'Scissors') {
-            winner = pick1;
-        }
+        return 'Tie';
     }
 
-    return winner;
+    switch (pick1) {
+        case 'Rock':
+            if (pick2 == 'Scissors') {
+                return pick1;
+            } else {
+                return pick2;
+            }
+        case 'Paper':
+            if (pick2 == 'Rock') {
+                return pick1;
+            } else {
+                return pick2;
+            }
+        case 'Scissors':
+            if (pick2 == 'Paper') {
+                return pick1;
+            } else {
+                return pick2;
+            }
+        default:
+            console.error("ERROR");
+            return;
+    }
 }
 
 function askPlayerSelection() {
     let input = prompt(DEFAULT_PROMPT);
+
+    if (input == '') {
+        alert(OOPS_PROMPT);
+        return askPlayerSelection();
+    }
+
     input = capitalizeString( input.trim() );
 
     if (input != 'Rock' && input != 'Paper' && input != 'Scissors') {
@@ -65,6 +120,6 @@ function getComputerChoice() {
 
 function capitalizeString(text) {
     let first_letter = text[0].toUpperCase();
-    let the_rest = text.slice(-1).toLowerCase();
+    let the_rest = text.slice(1).toLowerCase();
     return first_letter + the_rest;
 }
