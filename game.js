@@ -12,6 +12,7 @@ const RESTART_TEXT = "Refresh to play again."
 
 let playerWins = 0;
 
+game(5);
 
 function game(roundsToPlay) {
     if (roundsToPlay % 2 == 0) {
